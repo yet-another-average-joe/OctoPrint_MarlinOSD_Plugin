@@ -1,0 +1,32 @@
+
+<!-- Marlin OSD Settings -->
+
+<!-- BEGIN : form -->
+<form class="form-horizontal">
+
+
+  <ul class="nav nav-pills">
+
+    <li class="active">
+      <a data-toggle="tab" href="#marlinOSD_settings_appearance">{{ _('Appearance') }}</a>
+    </li>
+
+    <li>
+      <a data-toggle="tab" href="#marlinOSD_settings_system">{{ _('System') }}</a>
+    </li>
+  </ul>
+
+
+  <!-- BEGIN : TAB CONTENT -->
+
+  <div class="tab-content">
+
+    {% include './marlinOSD_settings_appearance.jinja2' %}
+
+    {% include './marlinOSD_settings_system.jinja2' %}
+  </div>
+
+  <!-- END : TAB CONTENT -->
+
+</form>
+<!-- END : form -->

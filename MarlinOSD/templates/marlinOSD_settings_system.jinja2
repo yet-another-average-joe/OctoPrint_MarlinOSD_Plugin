@@ -1,0 +1,83 @@
+
+
+<!-- ******************************************************************************** SYSTEM ************************************************************************* -->
+
+<!-- BEGIN : PANE : SYSTEM -->
+<div class="tab-pane" id="marlinOSD_settings_system">
+
+  <!-- BEGIN : SPI speed : edit +- -->
+  <div class="control-group">
+    <label class="control-label">{{ _('SPI speed') }}</label>
+    <div class="controls" data-toggle="tooltip" title="{{ _('SPI clock speed for communication between the hat and the Pi') }}">
+      <input  type="number"
+              step="any"
+              min="0"
+              max="32"
+              class="input-mini text-right"
+              data-bind="value: settingsViewModel.settings.plugins.MarlinOSD.spi_speed"/>
+      <span class="add-on">MHz)</span>
+      <div class="help-block_spi_speed">{{ _('If Marlin UI appears garbled or is unstable, decrease speed. This parameter has no influence on performance. Recommanded values : 1 to 24MHz') }}</div>
+    </div>
+  </div>
+  <!-- END : SPI speed : edit +- -->
+
+  <!-- BEGIN : debounce time : edit +- -->
+  <div class="control-group">
+    <label class="control-label">{{ _('Button debounce time') }}</label>
+    <div class="controls" data-toggle="tooltip" title="{{ _('Marlin UI button debounce time in milliseconds') }}">
+      <input  type="number"
+              step="any"
+              min="0"
+              class="input-mini text-right"
+              data-bind="value: settingsViewModel.settings.plugins.MarlinOSD.debounce_time"/>
+      <span class="add-on">ms</span>
+      <div class="help-block_debounce_time">{{ _('Increase this value if the Marlin UI window tends to flicker when the button is pressed, or if the button does not react as expected.') }}</div>
+    </div>
+  </div>
+  <!-- END : Bounce time : edit +- -->
+
+  <!-- START : Start with Marlin UI : check box -->
+  <div class="control-group">
+    <div class="controls">
+      <label class="checkbox">
+        <input  type="checkbox"
+                data-toggle="tooltip"
+                data-bind="checked: settingsViewModel.settings.plugins.MarlinOSD.show_at_boot, tooltip: {}"
+                title="{{ _('Show Marlin UI at boot time') }}" /> {{ _('Show Marlin UI at boot time') }}
+      </label>
+      <div class="help-block_show_at_boot">{{ _('Show Marlin UI at boot time ; if checked, the Marlin UI window will be displayed as soon as the OS loads "marlin_osd.service"') }}</div>
+    </div>
+  </div>
+  <!-- END : Start with Marlin UI : check box -->
+
+  <!-- BEGIN : disable_HID : check box -->
+  <div class="control-group">
+    <div class="controls">
+      <label class="checkbox">
+        <input  type="checkbox"
+                data-toggle="tooltip"
+                data-bind="checked: settingsViewModel.settings.plugins.MarlinOSD.disable_HID, tooltip: {}"
+                title="{{ _('Disable HID events when Marlin UI is displayed') }}" /> {{ _('Disable HID events') }}
+      </label>
+      <div class="help-block_disable_HID">{{ _('If checked, all user input events on the Raspberry Pi (keyboard, mouse, touchscreen, VNC etc.) will be ignored while Marlin UI is displayed. This is a recommended setting.') }}</div>
+    </div>
+  </div>
+  <!-- END : disable_HID : check box -->
+
+  <br />
+  <br />
+  <br />
+  <br />
+
+
+  <!-- BEGIN : APPLY NOW BUTTON -->
+  <div class="control-group">
+    <div class="controls">
+      <button class="btn btn-primary" data-bind="click: applyNow"> {{ _('Apply now') }} </button>
+    </div>
+  </div>
+  <!-- END : APPLY NOW BUTTON -->
+
+</div>
+<!-- END : PANE : SYSTEM -->
+
