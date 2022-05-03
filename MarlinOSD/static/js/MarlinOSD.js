@@ -41,7 +41,7 @@ $(function() {
                 'demo_mode': self.settingsViewModel.settings.plugins.MarlinOSD.demo_mode(),
             });
         }
-
+/*
         self.installService = function (data) {
             OctoPrint.simpleApiCommand("MarlinOSD", "installService");
             console.log('************************************ Install Service ***************************************')
@@ -52,7 +52,7 @@ $(function() {
             console.log('************************************ Uninstall Service ***************************************')
         };
     }
-
+*/
     /* view model class, parameters for constructor, container to bind to
      * Please see http://docs.octoprint.org/en/master/plugins/viewmodels.html#registering-custom-viewmodels for more details
      * and a full list of the available options.
