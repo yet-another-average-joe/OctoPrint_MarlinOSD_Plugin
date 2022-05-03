@@ -7,16 +7,16 @@
 
 $(function() {
     function MarlinOSD_ViewModel(parameters) {
-        var self = this;
+            var self = this;
 
-        // assign the injected parameters, e.g.:
-        // self.loginStateViewModel = parameters[0];
-        self.settingsViewModel = parameters[0];
+            // assign the injected parameters, e.g.:
+            // self.loginStateViewModel = parameters[0];
+            self.settingsViewModel = parameters[0];
 
-        // TODO: Implement your plugin's view model here.
-        self.applyNow = function (data) {
-            OctoPrint.simpleApiCommand("MarlinOSD", "applyNow");
-            //console.log("##################################### Apply Now #####################################");
+            // TODO: Implement your plugin's view model here.
+            self.applyNow = function (data) {
+                OctoPrint.simpleApiCommand("MarlinOSD", "applyNow");
+                //console.log("##################################### Apply Now #####################################");
 
             // a voir https://docs.octoprint.org/en/master/modules/plugin.html?highlight=save%20settings#octoprint.plugin.PluginSettings.save
             // save(force = False, trigger_event = False) avec True et False
@@ -24,8 +24,8 @@ $(function() {
             OctoPrint.settings.savePluginSettings('MarlinOSD', {
                 // tab pane: Appearance
                 'img_quality': self.settingsViewModel.settings.plugins.MarlinOSD.img_quality(),
-                'mode': self.settingsViewModel.settings.plugins.MarlinOSD.mode(),
-                'theme': self.settingsViewModel.settings.plugins.MarlinOSD.theme(),
+                'display_mode': self.settingsViewModel.settings.plugins.MarlinOSD.display_mode(),
+                'marlin_mode_theme': self.settingsViewModel.settings.plugins.MarlinOSD.marlin_mode_theme(),
                 'size': self.settingsViewModel.settings.plugins.MarlinOSD.size(),
                 'position': self.settingsViewModel.settings.plugins.MarlinOSD.position(),
                 //'viewport_opacity': self.settingsViewModel.settings.plugins.MarlinOSD.viewport_opacity(), // not used, always 100%
@@ -38,10 +38,19 @@ $(function() {
                 'debounce_time': self.settingsViewModel.settings.plugins.MarlinOSD.debounce_time(),
                 'show_at_boot': self.settingsViewModel.settings.plugins.MarlinOSD.show_at_boot(),
                 'disable_HID': self.settingsViewModel.settings.plugins.MarlinOSD.disable_HID(),
+                'demo_mode': self.settingsViewModel.settings.plugins.MarlinOSD.demo_mode(),
             });
-
-
         }
+
+        self.installService = function (data) {
+            OctoPrint.simpleApiCommand("MarlinOSD", "installService");
+            console.log('************************************ Install Service ***************************************')
+        };
+
+        self.uninstallService = function (data) {
+            OctoPrint.simpleApiCommand("MarlinOSD", "uninstallService");
+            console.log('************************************ Uninstall Service ***************************************')
+        };
     }
 
     /* view model class, parameters for constructor, container to bind to

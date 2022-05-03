@@ -20,8 +20,8 @@ QLTY_MEDIUM=1
 QLTY_HIGH=2
 
 # mode
-MARLIN_MODE=0
-CUSTOM_SIZING=1
+DISPLAY_MODE_MARLIN=0
+DISPLAY_MODE_CUSTOM=1
 
 # position
 TOP_LEFT=0
@@ -50,8 +50,8 @@ class MarlinOSD_Plugin(octoprint.plugin.StartupPlugin,
         return dict(
                         # tab pane : Appearance
                         img_quality         = QLTY_MEDIUM,
-                        mode                = CUSTOM_SIZING,
-                        theme               = 0,
+                        display_mode        = DISPLAY_MODE_CUSTOM,
+                        marlin_mode_theme   = 0,
                         size                = 50,
                         position            = CENTER_CENTER,
                         #viewport_opacity    = 100, # not used, always 100%
@@ -63,7 +63,8 @@ class MarlinOSD_Plugin(octoprint.plugin.StartupPlugin,
                         spi_speed           = 8,
                         debounce_time       = 300,
                         show_at_boot        = "true",
-                        disable_HID         = "true"
+                        disable_HID         = "false",
+                        demo_mode           = "true"
         )
 
     def get_template_configs(self):

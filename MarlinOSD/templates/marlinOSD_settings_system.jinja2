@@ -64,8 +64,20 @@
   </div>
   <!-- END : disable_HID : check box -->
 
-  <br />
-  <br />
+  <!-- BEGIN : demoMode : check box -->
+  <div class="control-group">
+    <div class="controls">
+      <label class="checkbox">
+        <input  type="checkbox"
+                data-toggle="tooltip"
+                data-bind="checked: settingsViewModel.settings.plugins.MarlinOSD.demo_mode, tooltip: {}"
+                title="{{ _('Demo Mode') }}" /> {{ _('Demo Mode') }}
+      </label>
+      <div class="help-block_demo_mode">{{ _('') }}</div>
+    </div>
+  </div>
+  <!-- END : demoMode : check box -->
+
   <br />
   <br />
 

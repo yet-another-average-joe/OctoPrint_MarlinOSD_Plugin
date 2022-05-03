@@ -14,8 +14,11 @@
     <li>
       <a data-toggle="tab" href="#marlinOSD_settings_system">{{ _('System') }}</a>
     </li>
-  </ul>
 
+    <li>
+      <a data-toggle="tab" href="#marlinOSD_settings_service">{{ _('Service') }}</a>
+    </li>
+  </ul>
 
   <!-- BEGIN : TAB CONTENT -->
 
@@ -24,6 +27,8 @@
     {% include './marlinOSD_settings_appearance.jinja2' %}
 
     {% include './marlinOSD_settings_system.jinja2' %}
+
+    {% include './marlinOSD_settings_service.jinja2' %}
   </div>
 
   <!-- END : TAB CONTENT -->
