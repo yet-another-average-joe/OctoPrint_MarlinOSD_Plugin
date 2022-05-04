@@ -50,7 +50,7 @@ class MarlinOSD_Plugin(octoprint.plugin.StartupPlugin,
         return dict(
                         # tab pane : Appearance
                         img_quality         = QLTY_MEDIUM,
-                        display_mode        = 1,
+                        display_mode        = "1",
                         marlin_mode_theme   = 0,
                         size                = 50,
                         position            = CENTER_CENTER,

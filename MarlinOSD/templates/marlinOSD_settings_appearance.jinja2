@@ -30,7 +30,6 @@
       <label class="radio">
         <input  type="radio"
               value="0"
-              checked
               data-bind="checked: settingsViewModel.settings.plugins.MarlinOSD.display_mode, tooltip: {}"
               title="{{ _('Marlin mode : full screen 12864 emulation with solid colors') }}"/> {{ _('Marlin mode : full screen 12864 emulation') }}
       </label>
@@ -66,6 +65,7 @@
       <label class="radio">
         <input  type="radio"
               value="1"
+              checked="checked"
               data-bind="checked: settingsViewModel.settings.plugins.MarlinOSD.display_mode, tooltip: {}"
               title="{{ _('Custom mode ; fully customizable colors and transparency') }}" /> {{ _('Custom mode :') }}
       </label>
