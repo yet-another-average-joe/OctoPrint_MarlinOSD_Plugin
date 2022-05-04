@@ -28,7 +28,6 @@ $(function() {
                 'marlin_mode_theme': self.settingsViewModel.settings.plugins.MarlinOSD.marlin_mode_theme(),
                 'size': self.settingsViewModel.settings.plugins.MarlinOSD.size(),
                 'position': self.settingsViewModel.settings.plugins.MarlinOSD.position(),
-                //'viewport_opacity': self.settingsViewModel.settings.plugins.MarlinOSD.viewport_opacity(), // not used, always 100%
                 'fgnd_color': self.settingsViewModel.settings.plugins.MarlinOSD.fgnd_color(),
                 'fgnd_opacity': self.settingsViewModel.settings.plugins.MarlinOSD.fgnd_opacity(),
                 'bkgnd_color': self.settingsViewModel.settings.plugins.MarlinOSD.bkgnd_color(),
@@ -38,7 +37,7 @@ $(function() {
                 'debounce_time': self.settingsViewModel.settings.plugins.MarlinOSD.debounce_time(),
                 'show_at_boot': self.settingsViewModel.settings.plugins.MarlinOSD.show_at_boot(),
                 'disable_HID': self.settingsViewModel.settings.plugins.MarlinOSD.disable_HID(),
-                'demo_mode': self.settingsViewModel.settings.plugins.MarlinOSD.demo_mode(),
+                'demo_mode': self.settingsViewModel.settings.plugins.MarlinOSD.demo_mode()
             });
         }
 /*
@@ -51,8 +50,9 @@ $(function() {
             OctoPrint.simpleApiCommand("MarlinOSD", "uninstallService");
             console.log('************************************ Uninstall Service ***************************************')
         };
+*/        
     }
-*/
+
     /* view model class, parameters for constructor, container to bind to
      * Please see http://docs.octoprint.org/en/master/plugins/viewmodels.html#registering-custom-viewmodels for more details
      * and a full list of the available options.

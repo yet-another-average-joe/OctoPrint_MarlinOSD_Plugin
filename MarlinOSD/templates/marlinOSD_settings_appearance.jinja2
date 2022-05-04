@@ -13,7 +13,7 @@
       <select id=""
               class="input-block"
               data-bind="value: settingsViewModel.settings.plugins.MarlinOSD.img_quality"
-              title="{{ _('Graphics quality : medium and high are intended for use with VNC ; these settings slightly increase CPU and memory usage') }}" />
+              title="{{ _('Graphics quality : medium and high are intended for use with VNC ; these settings slightly increase CPU and memory usage') }}" >
       <option value="0">Low</option>
       <option value="1">Medium</option>
       <option value="2">High</option>
@@ -30,11 +30,10 @@
       <label class="radio">
         <input  type="radio"
               value="0"
+              checked
               data-bind="checked: settingsViewModel.settings.plugins.MarlinOSD.display_mode, tooltip: {}"
-              title="{{ _('Marlin mode : full screen 12864 emulation with solid colors') }}" /> {{ _('Marlin mode : full screen 12864 emulation') }}
+              title="{{ _('Marlin mode : full screen 12864 emulation with solid colors') }}"/> {{ _('Marlin mode : full screen 12864 emulation') }}
       </label>
-
-      <br/>
 
       <!-- BEGIN : Theme : combo box -->
       <div class="control-group">
@@ -43,7 +42,7 @@
           <select id=""
                   class="input-block"
                   data-bind="value: settingsViewModel.settings.plugins.MarlinOSD.marlin_mode_theme"
-                  title="{{ _('Various LCD and OLED displays with predifined colors') }}" />
+                  title="{{ _('Various LCD and OLED displays with predifined colors') }}" >
           <option value="0">LCD Classic : White / Blue</option>
           <option value="1">LCD : Light Blue / Blue</option>
           <option value="2">LCD : Black / White</option>
@@ -62,6 +61,7 @@
       </div>
       <!-- END : Theme : combo box -->
 
+      <br/>
 
       <label class="radio">
         <input  type="radio"

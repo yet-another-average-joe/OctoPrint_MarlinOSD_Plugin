@@ -50,11 +50,10 @@ class MarlinOSD_Plugin(octoprint.plugin.StartupPlugin,
         return dict(
                         # tab pane : Appearance
                         img_quality         = QLTY_MEDIUM,
-                        display_mode        = DISPLAY_MODE_CUSTOM,
+                        display_mode        = 1,
                         marlin_mode_theme   = 0,
                         size                = 50,
                         position            = CENTER_CENTER,
-                        #viewport_opacity    = 100, # not used, always 100%
                         fgnd_color          = "#ffffff",	# white
                         fgnd_opacity        = 100,
                         bkgnd_color         = "#0000ff",	# blue
@@ -62,9 +61,9 @@ class MarlinOSD_Plugin(octoprint.plugin.StartupPlugin,
                         # tab pane : System
                         spi_speed           = 8,
                         debounce_time       = 300,
-                        show_at_boot        = "true",
-                        disable_HID         = "false",
-                        demo_mode           = "true"
+                        show_at_boot        = True,
+                        disable_HID         = False,
+                        demo_mode           = True,
         )
 
     def get_template_configs(self):
