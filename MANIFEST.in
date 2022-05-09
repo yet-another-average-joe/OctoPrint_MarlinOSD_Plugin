@@ -2,3 +2,6 @@ include README.md
 recursive-include MarlinOSD/templates *
 recursive-include MarlinOSD/translations *
 recursive-include MarlinOSD/static *
+recursive-include MarlinOSD/data *
+recursive-include MarlinOSD/data/c_src *
+recursive-include MarlinOSD/bin *

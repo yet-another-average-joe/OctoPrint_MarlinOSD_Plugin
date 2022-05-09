@@ -10,9 +10,15 @@ from __future__ import absolute_import
 #
 
 import octoprint.plugin
+
 #from octoprint.events import Events
+
 #import logging
 #import flask
+import os
+import subprocess
+
+
 
 # image quality (oversampling)
 QLTY_LOW=0
@@ -20,19 +26,75 @@ QLTY_MEDIUM=1
 QLTY_HIGH=2
 
 # mode
-DISPLAY_MODE_MARLIN=0
-DISPLAY_MODE_CUSTOM=1
+DISPLAY_MODE_MARLIN="0"
+DISPLAY_MODE_CUSTOM="1"
+
+# Marlin Mode theme
+THEME_LCD_CLASSIC       = 0
+THEME_LCD_LBLUE_BLUE    = 1
+THEME_LCD_BLACK_WHITE   = 2
+THEME_LCD_BLACK_YELLOW  = 3
+THEME_LCD_BLACK_BLUE    = 4
+THEME_LCD_BLACK_GREEN   = 5
+THEME_HEADACHE          = 6
+THEME_OLED_BLUE         = 7
+THEME_OLED_WHITE        = 8
+THEME_OLED_YELLOW       = 9
+THEME_OLED_GREEN        = 10
+THEME_RETINA_DAMAGE     = 11
 
 # position
-TOP_LEFT=0
-TOP_CENTER=1
-TOP_RIGHT=2
-CENTER_LEFT=3
-CENTER_CENTER=4
-CENTER_RIGHT=5
-BOTTOM_LEFT=6
-BOTTOM_CENTER=7
-BOTTOM_RIGHT=8
+POS_TOP_LEFT                = 0
+POS_TOP_CENTER              = 1
+POS_TOP_RIGHT               = 2
+POS_CENTER_LEFT             = 3
+POS_CENTER_CENTER           = 4
+POS_CENTER_RIGHT            = 5
+POS_BOTTOM_LEFT             = 6
+POS_BOTTOM_CENTER           = 7
+POS_BOTTOM_RIGHT            = 8
+
+# pull up/down (from WiringPi)
+_PUD_OFF   = 0
+_PUD_DOWN  = 1
+_PUD_UP    = 2
+
+# edge  (from WiringPi)
+_INT_EDGE_SETUP      = 0
+_INT_EDGE_FALLING    = 1
+_INT_EDGE_RISING     = 2
+_INT_EDGE_BOTH       = 3
+
+################################# ALL DEFAULT SETTINGS ###############################
+
+DEFAULT_GFX_QUALITY         = QLTY_LOW
+DEFAULT_DISPLAY_MODE        = DISPLAY_MODE_CUSTOM
+DEFAULT_MARLIN_MODE_THEME   = THEME_LCD_CLASSIC
+DEFAULT_SIZE                = 50
+DEFAULT_POSITION            = POS_CENTER_CENTER
+DEFAULT_FGND_COLOR          = "#ffffff"    # white
+DEFAULT_FGND_OPACITY        = 50
+DEFAULT_BKGND_COLOR         = "#0000ff"    # blue
+DEFAULT_BKGND_OPACITY       = 50
+
+DEFAULT_SHOW_AT_STARTUP     = True
+DEFAULT_DISABLE_HID         = False
+DEFAULT_DEMO_MODE           = True
+DEFAULT_SPI_SPEED           = 16    # MHz
+DEFAULT_DTR_TIMEOUT         = 3000  # ms
+DEFAULT_MARLIN_BTN_DEBOUNCE = 300   # ms
+
+DEFAULT_SPI_DEV                 = 3                     # MarlinOctoHat : SPI1-1 = "/dev/spidev1.0"
+DEFAULT_DTR_PIN                 = 5                     # MarlinOctoHat : GPIO5, physical pin #29
+DEFAULT_DTR_PUD                 = _PUD_OFF
+DEFAULT_DTR_EDGE                = _INT_EDGE_RISING
+DEFAULT_MARLIN_BTN_PIN          = 4                     # MarlinOctoHat : GPIO4, physical pin #7  pullup
+DEFAULT_MARLIN_BTN_PUD          = _PUD_UP
+DEFAULT_MARLIN_BTN_EDGE         = _INT_EDGE_RISING
+DEFAULT_ENCODER_EN_PIN          = 6                     # MarlinOctoHat : GPIO6, physical pin #31
+DEFAULT_ENCODER_EN_ACTIVE       = 1
+
+######################################################################################
 
 class MarlinOSD_Plugin(octoprint.plugin.StartupPlugin,
                        octoprint.plugin.TemplatePlugin,
@@ -40,34 +102,53 @@ class MarlinOSD_Plugin(octoprint.plugin.StartupPlugin,
                        octoprint.plugin.SimpleApiPlugin,
                        octoprint.plugin.SettingsPlugin):
 
-#    def on_after_startup(self):
-#        self._logger.info("####################### MarlinOSD : on_after_startup(self) ##########################")
+    def on_after_startup(self):
+        self._logger.info("             >> starting MarlinOSD plugin")
+
+        # UGGLY, BUT WORKING !
+
+        dir= self.get_template_folder() # ->  path to MarlinOSD/templates
+        #marlin_osd = "/" + dir + "/../data/c_src/marlin_osd"
+        marlin_osd = "/" + dir + "/../bin/marlin_osd"
+        #subprocess.run(marlin_osd)
+        os.system(marlin_osd)
 
     ##~~ SettingsPlugin mixin
 
     def get_settings_defaults(self):
 #        self._logger.info("##################### MarlinOSD : get_settings_defaults(self) #######################")
         return dict(
-                        # tab pane : Appearance
-                        img_quality         = QLTY_MEDIUM,
-                        display_mode        = "1",
-                        marlin_mode_theme   = 0,
-                        size                = 50,
-                        position            = CENTER_CENTER,
-                        fgnd_color          = "#ffffff",	# white
-                        fgnd_opacity        = 100,
-                        bkgnd_color         = "#0000ff",	# blue
-                        bkgnd_opacity       = 100,
+                        gfx_quality           = DEFAULT_GFX_QUALITY,
+                        display_mode          = DEFAULT_DISPLAY_MODE,
+                        marlin_mode_theme     = DEFAULT_MARLIN_MODE_THEME,
+                        size                  = DEFAULT_SIZE,
+                        position              = DEFAULT_POSITION,
+                        fgnd_color            = DEFAULT_FGND_COLOR,
+                        fgnd_opacity          = DEFAULT_FGND_OPACITY,
+                        bkgnd_color           = DEFAULT_BKGND_COLOR,
+                        bkgnd_opacity         = DEFAULT_BKGND_OPACITY,
+
                         # tab pane : System
-                        spi_speed           = 8,
-                        debounce_time       = 300,
-                        show_at_boot        = True,
-                        disable_HID         = False,
-                        demo_mode           = True,
+                        show_at_startup       = DEFAULT_SHOW_AT_STARTUP,
+                        disable_HID           = DEFAULT_DISABLE_HID,
+                        demo_mode             = DEFAULT_DEMO_MODE,
+                        spi_speed             = DEFAULT_SPI_SPEED,
+                        dtr_timeout           = DEFAULT_DTR_TIMEOUT,
+                        marlin_btn_debounce   = DEFAULT_MARLIN_BTN_DEBOUNCE,
+
+                        # tab pane : Hardware
+                        spi_dev               = DEFAULT_SPI_DEV,
+                        dtr_pin               = DEFAULT_DTR_PIN,
+                        dtr_pud               = DEFAULT_DTR_PUD,
+                        dtr_edge              = DEFAULT_DTR_EDGE,
+                        marlin_btn_pin        = DEFAULT_MARLIN_BTN_PIN,
+                        marlin_btn_pud        = DEFAULT_MARLIN_BTN_PUD,
+                        marlin_btn_edge       = DEFAULT_MARLIN_BTN_EDGE,
+                        encoder_en_pin        = DEFAULT_ENCODER_EN_PIN,
+                        encoder_en_active     = DEFAULT_ENCODER_EN_ACTIVE
         )
 
     def get_template_configs(self):
-#        self._logger.info("##################### MarlinOSD : get_template_configs(self) ########################")
         return [
             dict(type="settings", custom_bindings=True)
         ]

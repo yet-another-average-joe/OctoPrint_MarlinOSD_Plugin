@@ -1,0 +1,53 @@
+
+
+
+	https://stackoverflow.com/questions/34945811/efficient-way-to-wait-for-an-interrupt-in-c
+
+
+
+	build
+	-----
+
+	linker dependancies : -lpthread -lbcm_host -lwiringPi -L/opt/vc/lib
+ 
+	INSTALLATION AS A SERVICE
+	-------------------------
+
+	in  /root/etc/systemd/system, create file "marlin_osd.service" :
+
+	sudo nano /etc/systemd/system/marlin_osd.service
+
+	enable service :
+
+	sudo systemctl enable marlin_osd.service
+
+	SERVICE : marlin_osd.service
+	------------------------
+
+	[Unit]
+	Description=Marlin_OSD
+
+	[Service]
+	ExecStart=/home/pi/projects/MarlinOSD/bin/ARM/Release/marlin_osd.svc
+	User=root
+
+	[Install]
+	WantedBy=multi-user.target
+
+	COMMAND LINES :
+	---------------
+
+	enable service : sudo systemctl enable marlin_osd.service
+	disable service : sudo systemctl disable marlin_osd.service
+
+	stop service : sudo service marlin_osd stop
+	start service : sudo service marlin_osd start
+	restart service : sudo service marlin_osd restart
+
+	run (not as a service) :	./projects/MarlinOSD/bin/ARM/Debug/marlin_osd.svc
+								./projects/MarlinOSD/bin/ARM/Release/marlin_osd.svc
+
+	CONFIG.TXT
+	----------
+
+	service : do NOT configure SPI1 in config.txt !

@@ -1,0 +1,323 @@
+
+
+<!-- ******************************************************************************** HARDWARE ************************************************************************* -->
+
+<!-- BEGIN : PANE : HARDWARE -->
+<div class="tab-pane" id="marlinOSD_settings_hardware">
+
+  <div class="alert alert-block">
+    <strong>Warning :</strong><b>
+      These settings are for development purpose only ; there is no sanity check and some settings or combinations of settings may lead to unpredictable results !<br/><br/> These settings should NOT be changed if the MarlinOctoHat is mounted on the RasPi.</b>
+  </div>
+
+  <!-- ******************************************************************************** SPI ************************************************************************* -->
+  <!-- BEGIN : Group : SPI -->
+	<div class="control-group">
+		<legend>
+			<span>SPI</span>
+		</legend>
+
+    <div id="spi_text">
+     The SPI port Marlin On Screen Display receives data from.
+    <br/>
+     <br/>
+      <b>
+        MarlinOctoHat settings :<br/><br/>
+        SPI port : SPI1, device #1, CS pin = GPIO16.
+        <br/>
+        config.txt : "dtoverlay=spi1-1cs,cs0_pin=16"
+      </b>
+     <br/>
+     <br/>
+    </div>
+
+    <br/>
+
+    <!-- BEGIN : SPI device : combo box -->
+  <div class="control-group">
+    <label class="control-label" for="">Device</label>
+    <div class="controls">
+      <select id=""
+              class="input-block"
+              data-bind="value: settingsViewModel.settings.plugins.MarlinOSD.spi_dev"
+              title="{{ _('') }}" >
+      <option value="0">SPI0, device #1</option>
+      <option value="1">SPI0, device #2</option>
+      <option value="2">SPI1, device #1</option>
+      <option value="3">SPI1, device #2</option>
+      <option value="4">SPI1, device #3</option>
+      </select>
+      <div class="help-block_spi_dev">{{ _('') }}</div>
+    </div>
+  </div>
+  <!-- END : SPI device : combo box -->
+
+</div>
+<!-- END : Group : SPI -->
+
+  <!-- ******************************************************************************** DTR PIN ************************************************************************* -->
+
+  <!-- BEGIN : Group : Data ready -->
+	<div class="control-group">
+		<legend>
+			<span>Data ready</span>
+		</legend>
+
+    <div id="dtr_text">
+      This pin receives a pulse each time the printer motherboard refreshes its display.<br/>
+        <br/>
+        <b>MarlinOctoHat settings : GPIO5, no pull up/down, rising edge.</b>
+    </div>
+
+    <br/>
+    <br/>
+
+    <!--BEGIN : data ready pin : combo box-->
+  <div class = "control-group">
+    <label class = "control-label" for = "">Pin</label>
+    <div class = "controls">
+      <select id = "" 
+              class = "input-block"
+              data-bind = "value: settingsViewModel.settings.plugins.MarlinOSD.dtr_pin">
+              title="{{ _('') }}" >
+        <option value = "1">GPIO1 (physical pin #28)</option>
+        <option value = "2">GPIO2 (physical pin #3)</option>
+        <option value = "3">GPIO3 (physical pin #5)</option>
+        <option value = "4">GPIO4 (physical pin #7)</option>
+        <option value = "5">GPIO5 (physical pin #29)</option>
+        <option value = "6">GPIO6 (physical pin #31)</option>
+        <option value = "7">GPIO7 (physical pin #26)</option>
+        <option value = "8">GPIO8 (physical pin #24)</option>
+        <option value = "9">GPIO9 (physical pin #21)</option>
+        <option value = "10">GPIO10 (physical pin #19)</option>
+        <option value = "11">GPIO11 (physical pin #23)</option>
+        <option value = "12">GPIO12 (physical pin #32)</option>
+        <option value = "13">GPIO13 (physical pin #33)</option>
+        <option value = "14">GPIO14 (physical pin #8)</option>
+        <option value = "15">GPIO15 (physical pin #3)</option>
+        <option value = "16">GPIO16 (physical pin #36)</option>
+        <option value = "17">GPIO17 (physical pin #11)</option>
+        <option value = "18">GPIO18 (physical pin #12)</option>
+        <option value = "19">GPIO19 (physical pin #35)</option>
+        <option value = "20">GPIO20 (physical pin #38)</option>
+        <option value = "21">GPIO21 (physical pin #40)</option>
+        <option value = "22">GPIO22 (physical pin #15)</option>
+        <option value = "23">GPIO23 (physical pin #16)</option>
+        <option value = "24">GPIO24 (physical pin #18)</option>
+        <option value = "25">GPIO25 (physical pin #22)</option>
+        <option value = "26">GPIO26 (physical pin #37)</option>
+        <option value = "27">GPIO27 (physical pin #13)</option>
+      </select>
+      <div class="help-block_data_dtr_pin">{{ _('') }}</div>
+    </div>
+  </div>
+  <!--END : DTR pin : combo box-->
+
+    <!--BEGIN : DTR PUD : combo box-->
+    <div class = "control-group">
+      <label class = "control-label" for = "">Pull Up/Down</label>
+      <div class = "controls">
+        <select id = ""
+                class = "input-block"
+                data-bind = "value: settingsViewModel.settings.plugins.MarlinOSD.dtr_pud">
+          title="{{ _('') }}" >
+          <option value="0">Off</option>
+          <option value="1">Pull Down</option>
+          <option value="2">Pull Up</option>
+        </select>
+        <div class="help-block_data_dtr_pud">{{ _('') }}</div>
+      </div>
+    </div>
+    <!--END : DTR PUD : combo box-->
+
+    <!--BEGIN : DTR edge : combo box-->
+    <div class = "control-group">
+      <label class = "control-label" for = "">Edge</label>
+      <div class = "controls">
+        <select id = ""
+                class = "input-block"
+                data-bind = "value: settingsViewModel.settings.plugins.MarlinOSD.dtr_edge">
+          title="{{ _('') }}" >
+          <option value="1">Falling</option>
+          <option value="2">Rising</option>
+        </select>
+        <div class="help-block_data_dtr_edge">{{ _('') }}</div>
+      </div>
+    </div>
+    <!--END : DTR edge : combo box-->
+
+</div>
+<!-- END : Group : Marlin button -->
+
+  <!-- ******************************************************************************** BUTTON ************************************************************************* -->
+
+  <!-- BEGIN : Group : Marlin button -->
+	<div class="control-group">
+		<legend>
+			<span>Marlin button</span>
+		</legend>
+
+    <div id="btn_text">
+      This pin is for the Marlin On Screen Display toggle button.<br/><br/>
+        <b>MarlinOctoHat settings : GPIO4, pull up, rising edge, button between pin and ground.</b>
+    </div>
+
+    <br/>
+    <br/>
+
+    <!--BEGIN : Marlin button pin : combo box-->
+  <div class = "control-group">
+    <label class = "control-label" for = "">Pin</label>
+    <div class = "controls">
+      <select id = ""
+              class = "input-block"
+              data-bind = "value: settingsViewModel.settings.plugins.MarlinOSD.marlin_btn_pin">
+              title="{{ _('') }}" >
+        <option value = "1">GPIO1 (physical pin #28)</option>
+        <option value = "2">GPIO2 (physical pin #3)</option>
+        <option value = "3">GPIO3 (physical pin #5)</option>
+        <option value = "4">GPIO4 (physical pin #7)</option>
+        <option value = "5">GPIO5 (physical pin #29)</option>
+        <option value = "6">GPIO6 (physical pin #31)</option>
+        <option value = "7">GPIO7 (physical pin #26)</option>
+        <option value = "8">GPIO8 (physical pin #24)</option>
+        <option value = "9">GPIO9 (physical pin #21)</option>
+        <option value = "10">GPIO10 (physical pin #19)</option>
+        <option value = "11">GPIO11 (physical pin #23)</option>
+        <option value = "12">GPIO12 (physical pin #32)</option>
+        <option value = "13">GPIO13 (physical pin #33)</option>
+        <option value = "14">GPIO14 (physical pin #8)</option>
+        <option value = "15">GPIO15 (physical pin #3)</option>
+        <option value = "16">GPIO16 (physical pin #36)</option>
+        <option value = "17">GPIO17 (physical pin #11)</option>
+        <option value = "18">GPIO18 (physical pin #12)</option>
+        <option value = "19">GPIO19 (physical pin #35)</option>
+        <option value = "20">GPIO20 (physical pin #38)</option>
+        <option value = "21">GPIO21 (physical pin #40)</option>
+        <option value = "22">GPIO22 (physical pin #15)</option>
+        <option value = "23">GPIO23 (physical pin #16)</option>
+        <option value = "24">GPIO24 (physical pin #18)</option>
+        <option value = "25">GPIO25 (physical pin #22)</option>
+        <option value = "26">GPIO26 (physical pin #37)</option>
+        <option value = "27">GPIO27 (physical pin #13)</option>
+      </select>
+      <div class="help-block_marlin_btn_pin">{{ _('') }}</div>
+    </div>
+  </div>
+  <!--END : button pin : combo box-->
+
+    <!--BEGIN : button PUD : combo box-->
+    <div class = "control-group">
+      <label class = "control-label" for = "">Pull Up/Down</label>
+      <div class = "controls">
+        <select id = ""
+                class = "input-block"
+                data-bind = "value: settingsViewModel.settings.plugins.MarlinOSD.marlin_btn_pud">
+          title="{{ _('') }}" >
+          <option value="0">Off</option>
+          <option value="1">Pull Down</option>
+          <option value="2">Pull Up</option>
+        </select>
+        <div class="help-block_data_marlin_btn_pud">{{ _('') }}</div>
+      </div>
+    </div>
+    <!--END : button PUD : combo box-->
+
+    <!-- BEGIN : button interrupt edge : combo box -->
+    <div class="control-group">
+      <label class="control-label" for="">Edge</label>
+      <div class="controls">
+        <select id=""
+                class="input-block"
+                data-bind="value: settingsViewModel.settings.plugins.MarlinOSD.marlin_btn_edge"
+                title="{{ _('') }}" >
+          <option value="1">Falling</option>
+          <option value="2">Rising</option>
+        </select>
+        <div class="help-block_marlin_btn_edge">{{ _('') }}</div>
+      </div>
+    </div>
+    <!-- END : button interrupt edge : combo box -->
+
+</div>
+<!-- END : Group : Marlin button -->
+  <!-- ******************************************************************************** ENCODER ENABLE ************************************************************************* -->
+
+  <!-- BEGIN : Group : encoder enable pin -->
+  <div class="control-group">
+    <legend>
+      <span>Encoder enable</span>
+    </legend>
+
+    <div id="btn_text">
+      This pin is used to enable / disable the rotary encoder and its button.<br/><br/>
+      <b>MarlinOctoHat settings : GPIO6, active High.</b>
+    </div>
+
+    <br/>
+    <br/>
+
+    <!--BEGIN : Marlin button pin : combo box-->
+    <div class = "control-group">
+      <label class = "control-label" for = "">Pin</label>
+      <div class = "controls">
+        <select id = ""
+                class = "input-block"
+                data-bind = "value: settingsViewModel.settings.plugins.MarlinOSD.encoder_enable_pin">
+          title="{{ _('') }}" >
+          <option value = "1">GPIO1 (physical pin #28)</option>
+          <option value = "2">GPIO2 (physical pin #3)</option>
+          <option value = "3">GPIO3 (physical pin #5)</option>
+          <option value = "4">GPIO4 (physical pin #7)</option>
+          <option value = "5">GPIO5 (physical pin #29)</option>
+          <option value = "6">GPIO6 (physical pin #31)</option>
+          <option value = "7">GPIO7 (physical pin #26)</option>
+          <option value = "8">GPIO8 (physical pin #24)</option>
+          <option value = "9">GPIO9 (physical pin #21)</option>
+          <option value = "10">GPIO10 (physical pin #19)</option>
+          <option value = "11">GPIO11 (physical pin #23)</option>
+          <option value = "12">GPIO12 (physical pin #32)</option>
+          <option value = "13">GPIO13 (physical pin #33)</option>
+          <option value = "14">GPIO14 (physical pin #8)</option>
+          <option value = "15">GPIO15 (physical pin #3)</option>
+          <option value = "16">GPIO16 (physical pin #36)</option>
+          <option value = "17">GPIO17 (physical pin #11)</option>
+          <option value = "18">GPIO18 (physical pin #12)</option>
+          <option value = "19">GPIO19 (physical pin #35)</option>
+          <option value = "20">GPIO20 (physical pin #38)</option>
+          <option value = "21">GPIO21 (physical pin #40)</option>
+          <option value = "22">GPIO22 (physical pin #15)</option>
+          <option value = "23">GPIO23 (physical pin #16)</option>
+          <option value = "24">GPIO24 (physical pin #18)</option>
+          <option value = "25">GPIO25 (physical pin #22)</option>
+          <option value = "26">GPIO26 (physical pin #37)</option>
+          <option value = "27">GPIO27 (physical pin #13)</option>
+        </select>
+        <div class="help-block_marlin_encoder_enable_pin">{{ _('') }}</div>
+      </div>
+    </div>
+    <!--END : button pin : combo box-->
+
+    <!--BEGIN : encoder enable active low/high combo box-->
+    <div class = "control-group">
+      <label class = "control-label" for = "">Active</label>
+      <div class = "controls">
+        <select id = ""
+                class = "input-block"
+                data-bind = "value: settingsViewModel.settings.plugins.MarlinOSD.encoder_en_active">
+          title="{{ _('') }}" >
+          <option value="0">Low</option>
+          <option value="1">High</option>
+        </select>
+        <div class="help-block_data_encoder_en_active">{{ _('') }}</div>
+      </div>
+    </div>
+    <!--END : encoder enable active low/high combo box-->
+
+
+  </div>
+  <!-- END : Group : encoder enable pin -->
+
+</div>
+<!-- END : PANE : SYSTEM -->
+
