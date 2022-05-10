@@ -10,7 +10,8 @@
   <div class="control-group">
     <div class="controls">
       <label class="checkbox">
-        <input  type="checkbox"
+        <input  
+                type="checkbox"
                 data-toggle="tooltip"
                 data-bind="checked: settingsViewModel.settings.plugins.MarlinOSD.demo_mode, tooltip: {}"
                 title="{{ _('Demo Mode') }}" /> {{ _('Demo Mode') }}
@@ -24,7 +25,7 @@
   <div class="control-group">
     <label class="control-label" for="">Graphics quality</label>
     <div class="controls">
-      <select id=""
+      <select 
               class="input-block"
               data-bind="value: settingsViewModel.settings.plugins.MarlinOSD.gfx_quality"
               title="{{ _('Graphics quality') }}" >
@@ -43,16 +44,16 @@
     <div class="controls">
       <label class="radio">
         <input  type="radio"
-              value="0"
-              data-bind="checked: settingsViewModel.settings.plugins.MarlinOSD.display_mode, tooltip: {}"
-              title="{{ _('Marlin mode : full screen 12864 emulation with solid colors') }}"/> {{ _('Marlin mode : full screen 12864 emulation') }}
+                value="0"
+                data-bind="checked: settingsViewModel.settings.plugins.MarlinOSD.display_mode, tooltip: {}"
+                title="{{ _('Marlin mode : full screen 12864 emulation with solid colors') }}"/> {{ _('Marlin mode : full screen 12864 emulation') }}
       </label>
 
       <!-- BEGIN : Theme : combo box -->
       <div class="control-group">
         <label class="control-label" for="">Theme</label>
         <div class="controls">
-          <select id=""
+          <select 
                   class="input-block"
                   data-bind="value: settingsViewModel.settings.plugins.MarlinOSD.marlin_mode_theme"
                   title="{{ _('Various LCD and OLED tehmes with predifined colors') }}" >
@@ -76,10 +77,10 @@
 
       <label class="radio">
         <input  type="radio"
-              value="1"
-              checked="checked"
-              data-bind="checked: settingsViewModel.settings.plugins.MarlinOSD.display_mode, tooltip: {}"
-              title="{{ _('Custom mode ; fully customizable colors and transparency') }}" /> {{ _('Custom mode') }}
+                value="1"
+                checked="checked"
+                data-bind="checked: settingsViewModel.settings.plugins.MarlinOSD.display_mode, tooltip: {}"
+                title="{{ _('Custom mode ; fully customizable colors and transparency') }}" /> {{ _('Custom mode') }}
       </label>
     </div>
   </div>
@@ -89,7 +90,8 @@
   <div class="control-group">
     <label class="control-label">{{ _('Size') }}</label>
     <div class="controls">
-      <input  type="range"
+      <input  
+              type="range"
               class="input-large"
               min="0"
               max="100"
@@ -97,13 +99,14 @@
               data-bind="value: settingsViewModel.settings.plugins.MarlinOSD.size"
               title="{{ _('Marlin UI window relative size') }}" />
       <div class="input-append">
-        <input  input=""
-        type="number"
-        class="input-mini text-right"
-        min="0"
-        max="100"
-        data-bind="value: settingsViewModel.settings.plugins.MarlinOSD.size"
-        title="{{ _('Marlin UI window size') }}" />
+      <input  
+              input=""
+              type="number"
+              class="input-mini text-right"
+              min="0"
+              max="100"
+              data-bind="value: settingsViewModel.settings.plugins.MarlinOSD.size"
+              title="{{ _('Marlin UI window size') }}" />
         <span class="add-on">%</span>
       </div>
       <div class="help-block_size">{{ _('') }}</div>
@@ -115,19 +118,19 @@
   <div class="control-group">
     <label class="control-label" for="">Position</label>
     <div class="controls">
-      <select id=""
+      <select 
               class="input-block"
               data-bind="value: settingsViewModel.settings.plugins.MarlinOSD.position"
               title="{{ _('Marlin UI window position') }}" />
-      <option value="0">Top-Left</option>
-      <option value="1">Top-Center</option>
-      <option value="2">Top-Right</option>
-      <option value="3">Center-Left</option>
-      <option value="4">Center-Center</option>
-      <option value="5">Center-Right</option>
-      <option value="6">Bottom-Left</option>
-      <option value="7">Bottom-Center</option>
-      <option value="8">Bottom-Right</option>
+              <option value="0">Top-Left</option>
+              <option value="1">Top-Center</option>
+              <option value="2">Top-Right</option>
+              <option value="3">Center-Left</option>
+              <option value="4">Center-Center</option>
+              <option value="5">Center-Right</option>
+              <option value="6">Bottom-Left</option>
+              <option value="7">Bottom-Center</option>
+              <option value="8">Bottom-Right</option>
       </select>
       <div class="help-block_position">{{ _('') }}</div>
     </div>
@@ -138,14 +141,16 @@
   <div class="control-group">
     <label class="control-label">{{ _('Foreground (text) color') }}</label>
     <div class="controls">
-      <input  type="color"
+      <input  
+              type="color"
               class="input"
               style="width: 100px; height: 30px"
               data-bind="value: settingsViewModel.settings.plugins.MarlinOSD.fgnd_color"
               title="{{ _('Click here to open the color picker') }}" />
       <div class="input-append">
         <div class="colorPicker">
-          <input  type="text"
+          <input  
+                  type="text"
                   class="colorInput input-block-level"
                   style="width: 100px"
                   data-bind="value: settingsViewModel.settings.plugins.MarlinOSD.fgnd_color"
@@ -161,14 +166,16 @@
   <div class="control-group">
     <label class="control-label">{{ _('Foreground (text) opacity') }}</label>
     <div class="controls">
-      <input  type="range"
+      <input  
+              type="range"
               class="input-large"
               min="0" max="100"
               step="1"
               data-bind="value: settingsViewModel.settings.plugins.MarlinOSD.fgnd_opacity"
               title="{{ _('Marlin UI text alpha channel') }}" />
       <div class="input-append">
-        <input  input=""
+        <input  
+                input=""
                 type="number"
                 class="input-mini text-right"
                 min="0" max="100"
@@ -185,14 +192,16 @@
   <div class="control-group">
     <label class="control-label">{{ _('Background color') }}</label>
     <div class="controls">
-      <input  type="color"
+      <input  
+              type="color"
               class="input"
               style="width: 100px; height: 30px"
               data-bind="value: settingsViewModel.settings.plugins.MarlinOSD.bkgnd_color"
               title="{{ _('Click here to open the color picker') }}" />
       <div class="input-append">
         <div class="colorPicker2">
-          <input  type="text"
+          <input  id=""
+                  type="text"
                   class="colorInput input-block-level"
                   style="width: 100px"
                   data-bind="value: settingsViewModel.settings.plugins.MarlinOSD.bkgnd_color"
@@ -208,7 +217,8 @@
   <div class="control-group">
     <label class="control-label">{{ _('Background opacity') }}</label>
     <div class="controls">
-      <input  type="range"
+      <input  
+              type="range"
               class="input-large"
               style="height: 30px"
               min="0"
@@ -217,26 +227,19 @@
               data-bind="value: settingsViewModel.settings.plugins.MarlinOSD.bkgnd_opacity"
               title="{{ _('Marlin UI background alpha channel') }}" />
       <div class="input-append">
-        <input  input=""
-                type="number"
-                class="input-mini text-right"
-                min="0" max="100"
-                data-bind="value: settingsViewModel.settings.plugins.MarlinOSD.bkgnd_opacity"
-                title="{{ _('Marlin UI background alpha channel') }}" />
+      <input  
+              input=""
+              type="number"
+              class="input-mini text-right"
+              min="0" max="100"
+              data-bind="value: settingsViewModel.settings.plugins.MarlinOSD.bkgnd_opacity"
+              title="{{ _('Marlin UI background alpha channel') }}" />
         <span class="add-on">%</span>
       </div>
       <div class="help-block_viewport_bkgnd_opacity">{{ _('') }}</div>
     </div>
   </div>
   <!-- END : Background opacity : slider + edit box -->
-
-<br/>
-
-  <div class="control-group">
-    <div class="controls">
-      <button class="btn btn-primary" data-bind="click: applyNow"> {{ _('Apply now') }} </button>
-    </div>
-  </div>
 
 </div>
   <!-- END : PANE : APPEARANCE -->

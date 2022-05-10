@@ -16,13 +16,13 @@ $(function() {
             // TODO: Implement your plugin's view model here.
             self.applyNow = function (data) {
                 OctoPrint.simpleApiCommand("MarlinOSD", "applyNow");
-                //console.log("##################################### Apply Now #####################################");
 
             // a voir https://docs.octoprint.org/en/master/modules/plugin.html?highlight=save%20settings#octoprint.plugin.PluginSettings.save
             // save(force = False, trigger_event = False) avec True et False
 
             OctoPrint.settings.savePluginSettings('MarlinOSD', {
                 // tab pane: Appearance
+                'demo_mode'             : self.settingsViewModel.settings.plugins.MarlinOSD.demo_mode(),
                 'gfx_quality'           : self.settingsViewModel.settings.plugins.MarlinOSD.gfx_quality(),
                 'display_mode'          : self.settingsViewModel.settings.plugins.MarlinOSD.display_mode(),
                 'marlin_mode_theme'     : self.settingsViewModel.settings.plugins.MarlinOSD.marlin_mode_theme(),
@@ -36,21 +36,20 @@ $(function() {
                 // tab pane: System
                 'show_at_startup'       : self.settingsViewModel.settings.plugins.MarlinOSD.show_at_startup(),
                 'disable_HID'           : self.settingsViewModel.settings.plugins.MarlinOSD.disable_HID(),
-                'demo_mode'             : self.settingsViewModel.settings.plugins.MarlinOSD.demo_mode(),
                 'spi_speed'             : self.settingsViewModel.settings.plugins.MarlinOSD.spi_speed(),
                 'dtr_timeout'           : self.settingsViewModel.settings.plugins.MarlinOSD.dtr_timeout(),
                 'marlin_btn_debounce'   : self.settingsViewModel.settings.plugins.MarlinOSD.marlin_btn_debounce(),
 
                 // tab pane: Hardware
-                'spi_dev'              : self.settingsViewModel.settings.plugins.MarlinOSD.spi_dev(),
+                'spi_dev'               : self.settingsViewModel.settings.plugins.MarlinOSD.spi_dev(),
                 'dtr_pin'               : self.settingsViewModel.settings.plugins.MarlinOSD.dtr_pin(),
                 'dtr_pud'               : self.settingsViewModel.settings.plugins.MarlinOSD.dtr_pud(),
                 'dtr_edge'              : self.settingsViewModel.settings.plugins.MarlinOSD.dtr_edge(),
                 'marlin_btn_pin'        : self.settingsViewModel.settings.plugins.MarlinOSD.marlin_btn_pin(),
                 'marlin_btn_pud'        : self.settingsViewModel.settings.plugins.MarlinOSD.marlin_btn_pud(),
                 'marlin_btn_edge'       : self.settingsViewModel.settings.plugins.MarlinOSD.marlin_btn_edge(),
-                'encoder_en_pin'        : self.settingsViewModel.settings.plugins.MarlinOSD.encoder_enable_pin(),
-                'encoder_en_active'     : self.settingsViewModel.settings.plugins.MarlinOSD.encoder_enable_active()
+                'encoder_en_pin'        : self.settingsViewModel.settings.plugins.MarlinOSD.encoder_en_pin(),
+                'encoder_en_active'     : self.settingsViewModel.settings.plugins.MarlinOSD.encoder_en_active()
             });
         }
     }

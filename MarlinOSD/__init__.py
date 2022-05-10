@@ -1,24 +1,17 @@
 # coding=utf-8
-from __future__ import absolute_import
 
-#
+#####################################################################################
 #
 #
 #       Marlin On Screen Display (MarlinOSD) __init__.py
 #
 #
-#
+#####################################################################################
 
+from __future__ import absolute_import
 import octoprint.plugin
-
-#from octoprint.events import Events
-
-#import logging
-#import flask
 import os
 import subprocess
-
-
 
 # image quality (oversampling)
 QLTY_LOW=0
@@ -84,7 +77,7 @@ DEFAULT_SPI_SPEED           = 16    # MHz
 DEFAULT_DTR_TIMEOUT         = 3000  # ms
 DEFAULT_MARLIN_BTN_DEBOUNCE = 300   # ms
 
-DEFAULT_SPI_DEV                 = 3                     # MarlinOctoHat : SPI1-1 = "/dev/spidev1.0"
+DEFAULT_SPI_DEV                 = 2                     # MarlinOctoHat : SPI1-1 = "/dev/spidev1.0"
 DEFAULT_DTR_PIN                 = 5                     # MarlinOctoHat : GPIO5, physical pin #29
 DEFAULT_DTR_PUD                 = _PUD_OFF
 DEFAULT_DTR_EDGE                = _INT_EDGE_RISING
@@ -104,11 +97,8 @@ class MarlinOSD_Plugin(octoprint.plugin.StartupPlugin,
 
     def on_after_startup(self):
         self._logger.info("             >> starting MarlinOSD plugin")
-
         # UGGLY, BUT WORKING !
-
         dir= self.get_template_folder() # ->  path to MarlinOSD/templates
-        #marlin_osd = "/" + dir + "/../data/c_src/marlin_osd"
         marlin_osd = "/" + dir + "/../bin/marlin_osd"
         #subprocess.run(marlin_osd)
         os.system(marlin_osd)
@@ -116,7 +106,6 @@ class MarlinOSD_Plugin(octoprint.plugin.StartupPlugin,
     ##~~ SettingsPlugin mixin
 
     def get_settings_defaults(self):
-#        self._logger.info("##################### MarlinOSD : get_settings_defaults(self) #######################")
         return dict(
                         gfx_quality           = DEFAULT_GFX_QUALITY,
                         display_mode          = DEFAULT_DISPLAY_MODE,
@@ -154,13 +143,11 @@ class MarlinOSD_Plugin(octoprint.plugin.StartupPlugin,
         ]
 
 #    def get_api_commands(self):
-#        self._logger.info("###################### MarlinOSD : get_api_commands(self) ###########################")
 #        return dict(
 #            applyNow = []
 #        )
 
 #    def on_api_command(self, command, data):
-#        self._logger.info("################ MarlinOSD : on_api_command(self, command, data) ####################")
 #        if command == "applyNow":
 #            self._logger.info("############################## MarlinOSD : Apply Now ################################")
 
