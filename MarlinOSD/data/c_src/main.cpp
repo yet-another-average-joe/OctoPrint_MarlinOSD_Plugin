@@ -3,10 +3,14 @@
 
 	MarlinOSD/marlin_osd
 
-
+	
 	source ~/oprint/bin/activate
 	cd MarlinOSD
 	octoprint dev plugin:install
+
+	cd oprint/lib/python3.7/site-packages/MarlinOSD/data/c_src
+	make cleanobj
+
 */
 
 #include <wiringPi.h>	// linker dependency : wiringPi ; linker option : -lbcm_host
@@ -23,7 +27,7 @@
 // turns a pin HIGH/LOW before/after painting the dispmanx window
 // for logic analyser / scope
 
-#define __PROFILING
+//#define __PROFILING
 
 #ifdef __PROFILING
 
@@ -158,6 +162,12 @@ int main(/*int argc, char** argv*/)
 		CMarlinBridge::open();
 		CMarlinWnd::init();
 
+		// display now, don't wait for DTR
+		getSettingsFromConfigYaml();
+		updateHIDsStatus();
+		CMarlinBridge::read();
+		CMarlinWnd::paint();
+
 		while (showMarlin) // updated by MarlinModeBtnISR()
 		{
 			// if demo mode or SPI does not respond (set by CMarlinBridge::open())
@@ -173,7 +183,9 @@ int main(/*int argc, char** argv*/)
 			}
 			else
 			{
-				// wait for data ready pulse
+				enableEncoder(TRUE);
+
+				// wait for data ready (DTR) pulse
 				if (pthread_mutex_lock(&pthread_mtx_bmpReady) != 0)
 					exitError(ERROR_MULTITHREADING, __FILE__, __LINE__);
 
@@ -198,8 +210,6 @@ int main(/*int argc, char** argv*/)
 
 				if (pthread_mutex_unlock(&pthread_mtx_bmpReady) != 0)
 					exitError(ERROR_MULTITHREADING, __FILE__, __LINE__);
-
-				enableEncoder(TRUE);
 			}
 
 			// got something to display
@@ -209,6 +219,7 @@ int main(/*int argc, char** argv*/)
 			unsigned int t0 = micros();
 #endif //  __PROFILING
 
+			// update display
 			getSettingsFromConfigYaml();
 			updateHIDsStatus();
 			CMarlinBridge::read();
