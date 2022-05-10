@@ -94,7 +94,7 @@ const uint32_t			DEFAULT_DTR_PUD				= PUD_OFF;
 const uint32_t			DEFAULT_DTR_EDGE			= INT_EDGE_RISING;
 const uint32_t			DEFAULT_MARLIN_BTN_PIN		= 4;	// GPIO4, pin 7 ; pullup
 const uint32_t			DEFAULT_MARLIN_BTN_PUD		= PUD_UP;
-const uint32_t			DEFAULT_MARLIN_BTN_EDGE		= INT_EDGE_RISING;
+const uint32_t			DEFAULT_MARLIN_BTN_EDGE		= INT_EDGE_FALLING;
 const uint32_t			DEFAULT_ENCODER_EN_PIN		= 6;	// GPIO6, pin 31
 const uint32_t			DEFAULT_ENCODER_EN_ACTIVE	= 1;
 

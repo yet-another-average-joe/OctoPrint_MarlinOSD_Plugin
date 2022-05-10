@@ -83,7 +83,7 @@ DEFAULT_DTR_PUD                 = _PUD_OFF
 DEFAULT_DTR_EDGE                = _INT_EDGE_RISING
 DEFAULT_MARLIN_BTN_PIN          = 4                     # MarlinOctoHat : GPIO4, physical pin #7  pullup
 DEFAULT_MARLIN_BTN_PUD          = _PUD_UP
-DEFAULT_MARLIN_BTN_EDGE         = _INT_EDGE_RISING
+DEFAULT_MARLIN_BTN_EDGE         = _INT_EDGE_FALLING
 DEFAULT_ENCODER_EN_PIN          = 6                     # MarlinOctoHat : GPIO6, physical pin #31
 DEFAULT_ENCODER_EN_ACTIVE       = 1
 
