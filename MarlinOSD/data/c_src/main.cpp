@@ -73,6 +73,27 @@ inline void updateHIDsStatus()
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// helper : update display
+
+inline void refreshDisplay()
+{
+#ifdef __PROFILING
+	//digitalWrite(testPin, HIGH);
+	unsigned int t0 = micros();
+#endif //  __PROFILING
+
+	getSettingsFromConfigYaml();
+	updateHIDsStatus();
+	CMarlinBridge::read();
+	CMarlinWnd::paint();
+
+#ifdef __PROFILING
+	paintDuration = micros() - t0;
+	//digitalWrite(testPin, LOW);
+#endif //  __PROFILING
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // helper : GPIO initializations
 
 void initIO()
@@ -113,34 +134,23 @@ void initIO()
 
 int main(/*int argc, char** argv*/)
 {
-	// for cleanup on exit
 	signal(SIGTERM, onTerminate);	// terminate
 	signal(SIGINT, onTerminate);	// Ctrl+C
 
-	// TODO : usefull ???
+	// usefull ???
 	signal(SIGHUP, onTerminate);
 	signal(SIGKILL, onTerminate);
 	signal(SIGABRT, onTerminate);
 
-	// initialize GPU
-	bcm_host_init();
+	bcm_host_init(); // initialize GPU
 
-	getSettingsFromConfigYaml();
-
-	// IO initialization
-	initIO();
-
-	// initialization
+	getSettingsFromConfigYaml();	// get custom IO settings if any
+	initIO();						// IO initialization
 	showMarlin = settings[SHOW_AT_STARTUP].val;
-
-	// disable encoder if Marlin UI is not displayed
 	enableEncoder(showMarlin); // encoder : enable = HIGH, disable = LOW
-
-	// enable/disable HIDs depending on settings
 	updateHIDsStatus();
-
-	// main loop
-	while (~0)
+	
+	while (~0) // main loop
 	{
 		if (!showMarlin)
 		{
@@ -158,20 +168,14 @@ int main(/*int argc, char** argv*/)
 				exitError(ERROR_MULTITHREADING, __FILE__, __LINE__);
 		}
 		
-		// show Marlin was pressed : initialize On Screen Display
+		// Marlin button was pressed
 		CMarlinBridge::open();
 		CMarlinWnd::init();
-
-		// display now, don't wait for DTR
-		getSettingsFromConfigYaml();
-		updateHIDsStatus();
-		CMarlinBridge::read();
-		CMarlinWnd::paint();
+		refreshDisplay(); // display now, don't wait for DTR
 
 		while (showMarlin) // updated by MarlinModeBtnISR()
 		{
-			// if demo mode or SPI does not respond (set by CMarlinBridge::open())
-			// display demo bitmap
+			// if demo mode or SPI does not respond (set by CMarlinBridge::open()) -> display demo
 			if (settings[DEMO_MODE].val || CMarlinBridge::spiError)
 			{
 				// allways disable rotary encoder while in demo mode
@@ -189,6 +193,7 @@ int main(/*int argc, char** argv*/)
 				if (pthread_mutex_lock(&pthread_mtx_bmpReady) != 0)
 					exitError(ERROR_MULTITHREADING, __FILE__, __LINE__);
 
+				// set timeout
 				timeval tv;
 				timespec ts;
 
@@ -206,29 +211,13 @@ int main(/*int argc, char** argv*/)
 				if (n == 0)
 					CMarlinBridge::spiError = FALSE;
 				else if (n == ETIMEDOUT)
-					CMarlinBridge::spiError = TRUE; // reset by next bmpReadyISR() interrupt
+					CMarlinBridge::spiError = TRUE; // -> display demo  ; reset by next bmpReadyISR() interrupt
 
 				if (pthread_mutex_unlock(&pthread_mtx_bmpReady) != 0)
 					exitError(ERROR_MULTITHREADING, __FILE__, __LINE__);
 			}
-
-			// got something to display
-
-#ifdef __PROFILING
-			//digitalWrite(testPin, HIGH);
-			unsigned int t0 = micros();
-#endif //  __PROFILING
-
-			// update display
-			getSettingsFromConfigYaml();
-			updateHIDsStatus();
-			CMarlinBridge::read();
-			CMarlinWnd::paint();
-
-#ifdef __PROFILING
-			paintDuration = micros() - t0;
-			//digitalWrite(testPin, LOW);
-#endif //  __PROFILING
+			
+			refreshDisplay(); // got something to display
 		}
 
 		// end show Marlin : terminate OSD
