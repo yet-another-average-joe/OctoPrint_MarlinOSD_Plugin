@@ -141,27 +141,31 @@ bool getSettingsFromConfigYaml()
 
 static void parseSettings(std::ifstream& strm)
 {
+// false positive...
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+
 	std::string line;
 
 	// viewport reinit required
-	static unsigned gfx_qlty_old			= settings[GFX_QUALITY].val;
-	static unsigned display_mode_old		= settings[DISPLAY_MODE].val;
-	static unsigned theme_old				= settings[MARLIN_MODE_THEME].val;
-	static unsigned size_old				= settings[SIZE].val;
-	static unsigned position_old			= settings[POSITION].val;
-	static unsigned spi_speed_old			= settings[SPI_SPEED].val;
-	static unsigned dtr_timeout_old			= settings[DTR_TIMEOUT].val;
-	static unsigned marlin_btn_debounce_old = settings[MARLIN_BTN_DEBOUNCE].val;
+	static unsigned gfx_qlty_old			= DEFAULT_GFX_QUALITY;
+	static unsigned display_mode_old		= DEFAULT_DISPLAY_MODE;
+	static unsigned theme_old				= DEFAULT_MARLIN_MODE_THEME;
+	static unsigned size_old				= DEFAULT_SIZE;
+	static unsigned position_old			= DEFAULT_POSITION;
+	static unsigned spi_speed_old			= DEFAULT_SPI_SPEED;
+	static unsigned dtr_timeout_old			= DEFAULT_DTR_TIMEOUT;
+	static unsigned marlin_btn_debounce_old = DEFAULT_MARLIN_BTN_DEBOUNCE;
 
-	// wiringPi reboot required
-	static unsigned dtr_pin_old				= settings[DTR_PIN].val;
-	static unsigned dtr_pud_old				= settings[DTR_PUD].val;
-	static unsigned dtr_edge_old			= settings[DTR_EDGE].val;
-	static unsigned marlin_btn_pin_old		= settings[MARLIN_BTN_PIN].val;
-	static unsigned marlin_btn_pud_old		= settings[MARLIN_BTN_PUD].val;
-	static unsigned marlin_btn_edge_old		= settings[MARLIN_BTN_EDGE].val;
-	static unsigned encoder_en_pin_old		= settings[ENCODER_EN_PIN].val;
-	static unsigned encoder_en_active_old	= settings[ENCODER_EN_ACTIVE].val;
+	// wiringPi OctoPrint restart required
+	static unsigned dtr_pin_old				= DEFAULT_DTR_PIN;
+	static unsigned dtr_pud_old				= DEFAULT_DTR_PUD;
+	static unsigned dtr_edge_old			= DEFAULT_DTR_EDGE;
+	static unsigned marlin_btn_pin_old		= DEFAULT_MARLIN_BTN_PIN;
+	static unsigned marlin_btn_pud_old		= DEFAULT_MARLIN_BTN_PUD;
+	static unsigned marlin_btn_edge_old		= DEFAULT_MARLIN_BTN_EDGE;
+	static unsigned encoder_en_pin_old		= DEFAULT_ENCODER_EN_PIN;
+	static unsigned encoder_en_active_old	= DEFAULT_ENCODER_EN_ACTIVE;
 
 	// reset all settings to defaults : OctoPrint does not persist settings that don't differ from defaults
 	// will reset parameters in case an error occurs while retrieving data
@@ -267,6 +271,7 @@ static void parseSettings(std::ifstream& strm)
 		CMarlinBridge::read();
 	}
 
+	// save new settings
 	gfx_qlty_old			= settings[GFX_QUALITY].val;
 	display_mode_old		= settings[DISPLAY_MODE].val;
 	theme_old				= settings[MARLIN_MODE_THEME].val;
@@ -287,7 +292,10 @@ static void parseSettings(std::ifstream& strm)
 
 	// update colors
 	updateColors();
+
+#pragma GCC diagnostic pop
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // helper 
