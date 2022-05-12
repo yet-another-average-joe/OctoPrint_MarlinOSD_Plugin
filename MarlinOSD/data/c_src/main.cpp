@@ -3,13 +3,42 @@
 
 	MarlinOSD/marlin_osd
 
-	
+
+	----------------------------------------------------------
+	measuring : logic analyzer
+
+	start paint OLED -> DTR rising : 15 ms
+	STM32 lag = 15 ms = 1/67 sec
+
+			ROUGHLY :
+
+	OLED data = 1048 bytes @ 1MHz		:  11 ms
+		STM32 hat lag					: < 5 ms (= total "propagation time", inc 2.8 ms for tranposition)
+		getSettingsFromConfigYaml()		:   1 ms
+		read()	@8-16MHz				:   1 ms
+		paint()							:   5 / 20 / 40 ms depending on oversampling (LOW / MEDIUM / HIGH)
+
+	lag = end receive by hat -> end painting RasPi VRAM = DTR rising -> end paint()
+	@8-16 MHz : 7 / 22 / 40 ms depending on oversampling
+
+	start painting OLED -> end painting video buffer : +15 ms
+	(first bit at hat "input" -> last bit written in VRAM)
+
+	@8-16 MHz : 22 / 37 / 55 ms depending on oversampling ; does not include the HDMI + monitor lag !
+
+	--> ~2 ms could be saved transposing the pixel matrix on the RasPi
+	= 10% at best @16MHz and low oversampling 
+
+	----------------------------------------------------------
+
 	source ~/oprint/bin/activate
 	cd MarlinOSD
 	octoprint dev plugin:install
 
 	cd oprint/lib/python3.7/site-packages/MarlinOSD/data/c_src
 	make cleanobj
+
+	TODO : sanity check size !!! <= 100%
 
 */
 
@@ -24,18 +53,8 @@
 #include "EventGrabber.h"
 #include "MarlinWnd.h"
 
-// turns a pin HIGH/LOW before/after painting the dispmanx window
-// for logic analyser / scope
 
-//#define __PROFILING
-
-#ifdef __PROFILING
-
-//const int testPin =
-unsigned int testPulseWidth = 10;
-unsigned int paintDuration = 0;
-
-#endif //  __PROFILING
+//#define __MEASURE // for logic analyser / scope
 
 // Marlin OSD button ISR/thread
 void MarlinModeBtnISR();
@@ -51,8 +70,6 @@ void onTerminate(int);
 
 volatile bool showMarlin = false; // updated by MarlinModeBtnISR()
 
-// Helpers
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // helper : enable / disable rotary encoder
 
@@ -62,7 +79,7 @@ inline void enableEncoder(bool en = TRUE)
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// helper : enable / disable HID depnding on HID flag and didplay mode
+// helper : enable / disable HID depending on HID flag and didplay mode
 
 inline void updateHIDsStatus()
 {
@@ -75,23 +92,51 @@ inline void updateHIDsStatus()
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // helper : update display
 
+#ifdef __MEASURE
+
+const int testPin = 26;
+
 inline void refreshDisplay()
 {
-#ifdef __PROFILING
-	//digitalWrite(testPin, HIGH);
-	unsigned int t0 = micros();
-#endif //  __PROFILING
+	digitalWrite(testPin, HIGH);
 
+	getSettingsFromConfigYaml();
+	// getSettingsFromConfigYaml() :
+	// 0.7~1.5 milliseconds
+
+	digitalWrite(testPin, LOW);
+
+	updateHIDsStatus();
+
+	CMarlinBridge::read();
+	// read() :
+	// 0.7 milliseconds
+	// @16 MHz, read() while updating 
+	// 24 MHz : 0.6 ms
+	// 16 MHZ : 0.7 ms
+	// 8 MHz : 1.15 ms
+	// 4 MHz : 2.3 ms
+	// 2 MHz : 4.6 ms
+	// 1 MHz : 10 ms
+
+	digitalWrite(testPin, HIGH);
+
+	CMarlinWnd::paint();
+	// paint()
+	// LOW : 5ms, MEDIUM : 20 ms, HIGH : 40 ms ; size has no influence
+	// DTR -> start Paint() : 1 ms
+
+	digitalWrite(testPin, LOW);
+}
+#else
+inline void refreshDisplay()
+{
 	getSettingsFromConfigYaml();
 	updateHIDsStatus();
 	CMarlinBridge::read();
 	CMarlinWnd::paint();
-
-#ifdef __PROFILING
-	paintDuration = micros() - t0;
-	//digitalWrite(testPin, LOW);
-#endif //  __PROFILING
 }
+#endif //  __MEASURE
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // helper : GPIO initializations
@@ -122,11 +167,10 @@ void initIO()
 	if (wiringPiISR(settings[MARLIN_BTN_PIN].val, INT_EDGE_RISING, MarlinModeBtnISR) < 0)
 		exitError(ERROR_BTN_ISR, __FILE__, __LINE__);
 
-#ifdef __PROFILING
-	//pinMode(testPin, OUTPUT);
-	//digitalWrite(testPin, LOW);
-#endif //  __PROFILING
-
+#ifdef __MEASURE
+	pinMode(testPin, OUTPUT);
+	digitalWrite(testPin, LOW);
+#endif //  __MEASURE
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
