@@ -53,6 +53,7 @@ all : $(EXEC_NAME)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
 
 cleanobj :
+	mkdir ../../bin
 	make
 	chmod +x $(EXEC_NAME)
 	mv $(EXEC_NAME) ../../bin/
